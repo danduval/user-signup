@@ -27,7 +27,11 @@ def signup_form():
     if username == None:
         username = ''
 
-    return render_template('user-signup.html', error_1=error_1, error_2=error_2, error_3=error_3, error_4=error_4, username=username)
+    email = request.args.get("email")
+    if email == None:
+        email = ''
+
+    return render_template('user-signup.html', error_1=error_1, error_2=error_2, error_3=error_3, error_4=error_4, username=username, email=email)
 
 @app.route("/welcome", methods=["POST"])
 def welcome():
@@ -47,19 +51,21 @@ def welcome():
 
 # TO DO: validate username: must contain between 3 and 20 characters and no spaces
 
-    if len(username) < 3 or len(username) > 20 or " " in username:
-        error_1 = "please enter a valid username"
+    if len(username) > 0:
+        if len(username) < 3 or len(username) > 20 or " " in username:
+            error_1 = "please enter a valid username"
 
 # TO DO: make sure password and verification match:
+
+    if password == '':
+        error_2 = "please submit a valid password"
 
     if password != verification:
         error_2 = "password and verification don't match"
 
 # TO DO: make sure no fields were left empty (except email):
 
-    empty = False
-    if username == '' or username == None or password == '' or password == None or verification == '' or verification == None:
-        empty = True
+    if username == '' and password == '' and verification == '' and email == '':
         error_3 = "please don't submit an empty form, silly"
 
 # TO DO: validate email: must have between 3 and 20 characters, one @, one period, and no spaces
@@ -71,11 +77,11 @@ def welcome():
 # if there was an error, redirect back to the signup form, with error messages displayed
 
     if error_1 != "" or error_2 != "" or error_3 != "" or error_4 != "":
-        return redirect("/?error_1=" + error_1 + "&error_2=" + error_2 + "&error_3=" + error_3 + "&error_4=" + error_4 + "&username=" + username)   
+        return redirect("/?error_1=" + error_1 + "&error_2=" + error_2 + "&error_3=" + error_3 + "&error_4=" + error_4 + "&username=" + username + "&email=" + email)   
 
 # if there is no error, proceed to the Welcome page.
 
-    if error_1 == "" and error_2 == "" and error_3 == "" and error_4 == "" and empty == False:
+    if error_1 == "" and error_2 == "" and error_3 == "" and error_4 == "":
         return render_template("welcome.html", name=username)
 
 

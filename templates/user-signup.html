@@ -16,13 +16,13 @@
     <br>
     <label>Verify Password
         <input type="password" name="verification" />
-    </label><span>{{ error_3 }}</span>
+    </label>
     <br>
     <label>Email (optional)
-        <input type="text" name="email" />
+        <input type="text" name="email" value="{{email}}" />
     </label><span>{{ error_4 }}</span>
     <br>
-    <input type="submit" />
+    <input type="submit" /><span>{{ error_3 }}</span>
 </form>
 
 {% endblock %}
