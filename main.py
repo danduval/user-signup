@@ -51,9 +51,8 @@ def welcome():
 
 # TO DO: validate username: must contain between 3 and 20 characters and no spaces
 
-    if len(username) > 0:
-        if len(username) < 3 or len(username) > 20 or " " in username:
-            error_1 = "please enter a valid username"
+    if len(username) < 3 or len(username) > 20 or " " in username:
+        error_1 = "please enter a valid username"
 
 # TO DO: make sure password and verification match:
 
@@ -66,7 +65,10 @@ def welcome():
 # TO DO: make sure no fields were left empty (except email):
 
     if username == '' and password == '' and verification == '' and email == '':
+        error_1 = ''
+        error_2 = ''
         error_3 = "please don't submit an empty form, silly"
+        error_4 = ''
 
 # TO DO: validate email: must have between 3 and 20 characters, one @, one period, and no spaces
 
